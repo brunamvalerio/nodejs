@@ -1,41 +1,46 @@
-const http= require('http');
+// Importando o módulo express para criar o servidor
+const express = require('express');
 
-let server = http.createServer((req, res) => {
+// Criando uma instância do express
+let app = express();
 
-    console.log('URL:', req.url);
-    console.log('METHOD:', req.method);
+// Definindo a rota para a página inicial "/"
+// Quando um usuário acessar a raiz do servidor o código será executado
+app.get('/', (req, res) => {
+   
+    res.statusCode = 200;
 
-    switch (req.url) {
+    // Definindo o tipo de conteúdo da resposta como HTML
+    res.setHeader('Content-Type', 'text/html');
 
-        case '/':
+    
+    res.end('<h1>Olá</h1>');  // Exibe a mensagem "Olá" em um título <h1>
+});
 
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'text/html');
-        res.end('<h1>Olá</h1>');
+// Definindo a rota "/users" para fornecer uma lista de usuários em formato JSON
+app.get('/users', (req, res) => {
 
-        break;
+    // Definindo o código de status HTTP para '200 OK'
+    res.statusCode = 200;
 
-        case '/users':
+    // Definindo o tipo de conteúdo da resposta como JSON
+    res.setHeader('Content-Type', 'application/json');
 
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'application/json')
-        res.end(JSON.stringify({
-            users:[{
-                name: 'Hcode',
-                email: 'contato@hcode.com.br',
-                id: 1
-            }]
-        }));
-
-        break;
-
-    }
+    // Enviando a resposta como um objeto JSON, com informações de usuários
+    res.json({
+        users:[{
+            name: 'Hcode', 
+            email: 'contato@hcode.com.br', 
+            id: 1  
+        }]
+    });
 
 });
 
-server.listen(3000, '127.0.0.1', () => {
 
+// Quando o servidor estiver pronto, ele vai imprimir "servidor rodando!" no console
+app.listen(3000, '127.0.0.1', () => {
     console.log("servidor rodando!");
-
 });
+
 
