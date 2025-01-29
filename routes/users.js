@@ -1,31 +1,57 @@
+
+let NeDB = require('nedb');
+
+// Isso faz com que o banco de dados seja carregado automaticamente ao iniciar o servidor
+let db = new NeDB({
+    filename: 'users.db',  // Nome do arquivo onde os dados serão salvos
+    autoload: true          
+});
+
 module.exports = (app) => {
 
-    // A rota irá responder com informações de um usuário no formato JSON
+    
+    
     app.get('/users', (req, res) => {
 
         res.statusCode = 200;  
-        res.setHeader('Content-Type', 'application/json'); 
-        res.json({  // Envia a resposta no formato JSON com os dados do usuário
-            users: [{  // A chave 'users' contém um array com os dados de um usuário
-                name: 'Hcode', 
+        res.setHeader('Content-Type', 'application/json');  
+
+        
+        res.json({
+            users:[{
+                name: 'Hcode',  
                 email: 'contato@hcode.com.br',  
-                id: 1 
+                id: 1  
             }]
         });
 
     });
 
-    // Nova rota "/users" com o método POST
-    // A rota irá receber os dados do usuário
+    
+    
     app.post('/users', (req, res) => {
 
-        // O 'req.body' contém esses dados (por isso é necessário usar o 'body-parser' para fazer o parsing desses dados)
-        res.json(req.body);  // Retorna os dados recebidos, no formato JSON
+        // Inserindo os dados recebidos na requisição ('req.body') no banco de dados
+        db.insert(req.body, (err, user) => {
+
+            // Se ocorrer um erro durante a inserção dos dados, ele será mostrado no console
+            if (err) {
+                console.log(`erro: ${err}`);
+                res.status(400).json({
+                    error: err 
+                });
+            } else {
+                
+                
+                res.status(200).json(user);  
+
+            }
+
+        });
 
     });
 
 };
-
 
 
 

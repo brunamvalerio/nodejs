@@ -12,7 +12,6 @@ module.exports = (app) => {
         // Definindo o tipo de conteúdo da resposta
         // 'text/html' indica que a resposta será em formato HTML (uma página web)
         res.setHeader('Content-Type', 'text/html');
-
      
         res.end('<h1>Olá</h1>');
 
