@@ -1,42 +1,33 @@
+module.exports = (app) => {
 
-let express = require('express');
+    // Definindo a rota para "/users"
+    app.get('/users', (req, res) => {
 
+        res.statusCode = 200;  // Código de status 200: requisição bem-sucedida
+        res.setHeader('Content-Type', 'application/json');  // Cabeçalho indicando que a resposta será no formato JSON
+        res.json({
+            users: [{
+                name: 'Hcode',  // Nome do usuário
+                email: 'contato@hcode.com.br',  // Email do usuário
+                id: 1  // ID do usuário
+            }]
+        });
 
-let routes = express.Router();
-
-
-// - O servidor responderá com um objeto JSON contendo informações de um usuário
-routes.get('/', (req, res) => {
-
-   
-    res.statusCode = 200;
-
-  
-    res.setHeader('Content-Type', 'application/json');
-
-  
-    res.json({
-        users:[{
-            name: 'Hcode',  
-            email: 'contato@hcode.com.br',  
-            id: 1 
-        }]
     });
 
-});
+    // Definindo a rota para "/users/admin"
+    app.get('/users/admin', (req, res) => {
 
+        res.statusCode = 200; 
+        res.setHeader('Content-Type', 'application/json');  // indicando que a resposta será no formato JSON
+        res.json({
+            users: []  // Lista vazia de usuários
+        });
 
-routes.get('/admin', (req, res) => {
-
-    
-    res.statusCode = 200;
-
-    res.setHeader('Content-Type', 'application/json');
-
-    res.json({
-        users: [] 
     });
 
-});
+};
 
-module.exports = routes;
+
+
+
