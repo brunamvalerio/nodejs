@@ -1,46 +1,44 @@
-// Importando o módulo express para criar o servidor
+// Importando o módulo 'express' para criar o servidor
 const express = require('express');
 
 // Criando uma instância do express
+// 'app' é o servidor 
 let app = express();
 
-// Definindo a rota para a página inicial "/"
-// Quando um usuário acessar a raiz do servidor o código será executado
+// Definindo a primeira rota: quando alguém acessar a URL principal ("/")
 app.get('/', (req, res) => {
-   
+ 
     res.statusCode = 200;
 
-    // Definindo o tipo de conteúdo da resposta como HTML
+    // 'text/html' significa que a resposta será em formato HTML
     res.setHeader('Content-Type', 'text/html');
 
-    
-    res.end('<h1>Olá</h1>');  // Exibe a mensagem "Olá" em um título <h1>
+    // Enviando a resposta para o navegador
+
+    res.end('<h1>Olá</h1>'); 
 });
 
-// Definindo a rota "/users" para fornecer uma lista de usuários em formato JSON
+// Definindo a segunda rota: quando alguém acessar a URL "/users"
+// Essa rota vai responder com um JSON contendo informações de um usuário
 app.get('/users', (req, res) => {
 
-    // Definindo o código de status HTTP para '200 OK'
     res.statusCode = 200;
 
-    // Definindo o tipo de conteúdo da resposta como JSON
     res.setHeader('Content-Type', 'application/json');
 
-    // Enviando a resposta como um objeto JSON, com informações de usuários
+
     res.json({
-        users:[{
-            name: 'Hcode', 
-            email: 'contato@hcode.com.br', 
-            id: 1  
+        users: [{
+            name: 'Hcode',  // Nome do usuário
+            email: 'contato@hcode.com.br',  // Email do usuário
+            id: 1  // ID do usuário
         }]
     });
-
 });
 
 
-// Quando o servidor estiver pronto, ele vai imprimir "servidor rodando!" no console
+// O servidor vai escutar na porta 3000 e no endereço IP 127.0.0.1 (localhost)
 app.listen(3000, '127.0.0.1', () => {
+    // Exibindo uma mensagem no console indicando que o servidor está rodando
     console.log("servidor rodando!");
 });
-
-
