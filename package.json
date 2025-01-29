@@ -15,5 +15,8 @@
     "url": "https://github.com/brunamvalerio/nodejs/issues"
   },
   "homepage": "https://github.com/brunamvalerio/nodejs#readme",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "consign": "^0.1.6"
+  }
 }
