@@ -17,6 +17,7 @@
   "homepage": "https://github.com/brunamvalerio/nodejs#readme",
   "description": "",
   "dependencies": {
+    "body-parser": "^1.20.3",
     "consign": "^0.1.6"
   }
 }

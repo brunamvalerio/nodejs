@@ -1,28 +1,26 @@
 module.exports = (app) => {
 
-    // Definindo a rota para "/users"
+    // A rota irá responder com informações de um usuário no formato JSON
     app.get('/users', (req, res) => {
 
-        res.statusCode = 200;  // Código de status 200: requisição bem-sucedida
-        res.setHeader('Content-Type', 'application/json');  // Cabeçalho indicando que a resposta será no formato JSON
-        res.json({
-            users: [{
-                name: 'Hcode',  // Nome do usuário
-                email: 'contato@hcode.com.br',  // Email do usuário
-                id: 1  // ID do usuário
+        res.statusCode = 200;  
+        res.setHeader('Content-Type', 'application/json'); 
+        res.json({  // Envia a resposta no formato JSON com os dados do usuário
+            users: [{  // A chave 'users' contém um array com os dados de um usuário
+                name: 'Hcode', 
+                email: 'contato@hcode.com.br',  
+                id: 1 
             }]
         });
 
     });
 
-    // Definindo a rota para "/users/admin"
-    app.get('/users/admin', (req, res) => {
+    // Nova rota "/users" com o método POST
+    // A rota irá receber os dados do usuário
+    app.post('/users', (req, res) => {
 
-        res.statusCode = 200; 
-        res.setHeader('Content-Type', 'application/json');  // indicando que a resposta será no formato JSON
-        res.json({
-            users: []  // Lista vazia de usuários
-        });
+        // O 'req.body' contém esses dados (por isso é necessário usar o 'body-parser' para fazer o parsing desses dados)
+        res.json(req.body);  // Retorna os dados recebidos, no formato JSON
 
     });
 
