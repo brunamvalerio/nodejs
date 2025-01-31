@@ -1,31 +1,31 @@
 let NeDB = require('nedb');
 
-
+// Criação da instância do banco de dados NeDB
 let db = new NeDB({
-    filename: 'users.db',
-    autoload: true  // Autoload garante que o banco de dados seja carregado ao inicializar o servidor
+    filename: 'users.db',  
+    autoload: true          
 });
 
 module.exports = (app) => {
 
-    // Rota GET para listar todos os usuários
-    app.get('/users', (req, res) => {
+    // Definição da rota '/users'
+    let route = app.route('/users');
 
-        // Realiza a consulta no banco de dados através do nome name 
+    // Definição do método GET para a rota '/users' 
+    route.get((req, res) => {
+
+        // Busca todos os usuários no banco e os ordena por nome em ordem crescente
         db.find({}).sort({ name: 1 }).exec((err, users) => {
 
-            // Se houver erro na consulta
+            // Se ocorrer um erro ao consultar o banco de dados, chama a função de erro
             if (err) {
-                console.log(`error: ${err}`);
-                res.status(400).json({
-                    error: err 
-                });
+                app.utils.error.send(err, req, res);  // Utiliza o utilitário de erro para enviar a resposta de erro
             } else {
-                // Se não houver erro, retorna a lista de usuários encontrados
-                res.statusCode = 200;  // Código de sucesso HTTP
-                res.setHeader('Content-Type', 'application/json');  // Define o tipo de resposta como JSON
+                // Se a consulta for bem-sucedida, envia a lista de usuários como resposta
+                res.statusCode = 200;  
+                res.setHeader('Content-Type', 'application/json');  
                 res.json({
-                    users  // Resposta com a lista de usuários no formato JSON
+                    users  // Envia a lista de usuários no corpo da resposta
                 });
             }
 
@@ -33,21 +33,18 @@ module.exports = (app) => {
 
     });
 
-    // Rota POST para criar um novo usuário
-    app.post('/users', (req, res) => {
+    // Definição do método POST para a rota '/users' para criar um novo usuário
+    route.post((req, res) => {
 
-        // Inserção dos dados recebidos na requisição ('req.body') no banco de dados
+        // Insere os dados do novo usuário no banco de dados
         db.insert(req.body, (err, user) => {
 
-            // Se ocorrer um erro durante a inserção
+            // Se ocorrer um erro durante a inserção, chama a função de erro
             if (err) {
-                console.log(`erro: ${err}`);
-                res.status(400).json({
-                    error: err  // Retorna o erro para o cliente
-                });
+                app.utils.error.send(err, req, res);  // Utiliza o utilitário de erro para enviar a resposta de erro
             } else {
-                // Se a inserção for bem-sucedida, retorna o usuário inserido
-                res.status(200).json(user);  // Retorna os dados do usuário criado como resposta
+                // Se a inserção for bem-sucedida, envia o novo usuário como resposta
+                res.status(200).json(user);  
             }
 
         });
@@ -55,4 +52,3 @@ module.exports = (app) => {
     });
 
 };
-

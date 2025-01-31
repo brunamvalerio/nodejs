@@ -4,10 +4,10 @@ const consign = require('consign');
 // Importando o módulo 'body-parser' para fazer o parsing  das requisições HTTP
 // O body-parser é necessário para ler dados enviados pelo cliente (como formulários ou JSON)
 const bodyParser = require('body-parser');
-let app = express();
+let app = express(); 
 
 // Usando o body-parser para fazer o parse de dados enviados por formulários com a codificação 'urlencoded'
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false })); // tudo que vier 
 
 // Usando o body-parser para ler e formatar os dados no formato JSON
 app.use(bodyParser.json());

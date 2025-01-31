@@ -13,7 +13,7 @@ module.exports = (app) => {
         // 'text/html' indica que a resposta será em formato HTML (uma página web)
         res.setHeader('Content-Type', 'text/html');
      
-        res.end('<h1>Olá</h1>');
+        res.end('<h1>Olá</h1>'); 
 
     });
 
